@@ -5,7 +5,7 @@ sys.setdefaultencoding('utf8')
 import urllib2
 from BeautifulSoup import BeautifulSoup
 import xlsxwriter as xlw
-
+cityCode = 'ZBAA' #This is Beijing China city code other city code please look www.wunderground.com docs
 y = input('you please input year:')
 m = input('you please input month:')
 last_day = input('you please input month last day:')
@@ -15,7 +15,7 @@ if len(str(m)) < 2:  #format it
 else:
 	mStamp = str(m)
 
-timestamp = str(y) + '-' + mStamp  #make data look like 2014-03-01,which is convinient for excel or WPS to deal with
+timestamp = str(y) + '-' + mStamp
 
 workbook = xlw.Workbook('beijing_weather_data_'+timestamp+'.xlsx')
 
@@ -28,14 +28,14 @@ for d in range(1,(last_day+1)):
     timestamp = str(y) + str('-') + str(m) + str('-') + str(d)
 
     sheet = workbook.add_worksheet(timestamp)
-    title = ['Date(YMD)','Time (CST)', 'Temp.(°C)', 'Dew Point(°C)', 'Humidity', 'Pressure(hPa)', 'Visibility(km)', 'Wind Dir', 'Wind Speed(<km/h>/<m/s>)', 'Gust Speed(<km/h>/<m/s>)', 'Precip', 'Events',        'Conditions']
+    title = ['Date(YMD)','Time (CST)', 'Temp.(°C)', 'Dew Point(°C)', 'Humidity', 'Pressure(hPa)', 'Visibility(km)', 'Wind Dir', 'Wind Speed(<km/h>/<m/s>)', 'Gust Speed(<km/h>/<m/s>)', 'Precip', 'Events', 'Conditions']
     for i in range(len(title)):
 	sheet.write_string(0, i, title[i], workbook.add_format({'bold':True}))
-    print "Getting data for " + timestamp   #for we can see the process in shell
-    url = "https://www.wunderground.com/history/airport/ZBAA/" + str(y) + "/" + str(m) + "/" + str(d) + "/DailyHistory.html"
-    page = urllib2.urlopen(url)     #get the web page
+    print "Getting data for " + timestamp
+    url = "https://www.wunderground.com/history/airport/" + str(cityCode) + "/" + str(y) + "/" + str(m) + "/" + str(d) + "/DailyHistory.html"
+    page = urllib2.urlopen(url)
 
-    soup = BeautifulSoup(page)      #use BeautifulSoup to parsing the web page
+    soup = BeautifulSoup(page)
 
     table = soup.findAll(attrs = {"class":"no-metars"});
     datas = [];
