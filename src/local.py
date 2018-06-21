@@ -3,11 +3,13 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 import urllib2
-
 from BeautifulSoup import BeautifulSoup
 import xlsxwriter as xlw
+
 y = input('you please input year:')
-m = input('you please input month:') #get weather data of March(1) 2018
+m = input('you please input month:')
+last_day = input('you please input month last day:')
+
 if len(str(m)) < 2:  #format it
 	mStamp = '0' + str(m)
 else:
@@ -17,7 +19,7 @@ timestamp = str(y) + '-' + mStamp  #make data look like 2014-03-01,which is conv
 
 workbook = xlw.Workbook('beijing_weather_data_'+timestamp+'.xlsx')
 
-for d in range(1,31):               #loop from 2017.4.1 to 2018.5.31
+for d in range(1,(last_day+1)):
 
     if len(str(d)) < 2: #format it
     	dStamp = '0' + str(d)
@@ -59,6 +61,8 @@ for d in range(1,31):               #loop from 2017.4.1 to 2018.5.31
     for ds in datas:
 	 col = 0;
 	 for d in ds:
+	     if (str(d) == str('None')):
+         	 d = '';
 	     sheet.write_string(row, col, d)
 	     col += 1
 	 row += 1
