@@ -6,9 +6,9 @@ import urllib2
 from BeautifulSoup import BeautifulSoup
 import xlsxwriter as xlw
 cityCode = 'ZBAA' #This is Beijing China city code other city code please look www.wunderground.com docs
-y = input('you please input year:')
-m = input('you please input month:')
-last_day = input('you please input month last day:')
+y = input('Please input year:')
+m = input('Please input month:')
+last_day = input('Please input month last day:')
 
 if len(str(m)) < 2:  #format it
 	mStamp = '0' + str(m)
